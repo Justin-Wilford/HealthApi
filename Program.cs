@@ -1,3 +1,5 @@
+using HealthApi.Application;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
