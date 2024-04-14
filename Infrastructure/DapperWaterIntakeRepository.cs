@@ -11,5 +11,23 @@ public sealed class DapperWaterIntakeRepository : IWaterIntakeRepository
         _databaseOptions = databaseOptions;
     }
 
-    // add methods
+    public async Task AddWaterAsync(WaterIntake waterIntake)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<WaterIntake?> FindAllByDateAsync(DateTime date)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<WaterIntake?> FindByIdAsync(int waterIntakeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task DeleteWaterAsync(int waterIntakeId)
+    {
+        throw new NotImplementedException();
+    }
 }
