@@ -11,5 +11,13 @@ public sealed class DapperGoalRepository : IGoalRepository
         _databaseOptions = databaseOptions;
     }
 
-    // add methods
+    public async Task<Goals> GetGoalsAsync(int GoalId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task UpdateGoalsAsync(int GoalId)
+    {
+
+    }
 }
