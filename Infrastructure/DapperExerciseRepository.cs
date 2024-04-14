@@ -1,4 +1,6 @@
 using HealthApi.Application;
+using Dapper;
+using Microsoft.Data.SqlClient;
 
 namespace HealthApi.Infrastructure;
 
@@ -13,12 +15,24 @@ public sealed class DapperExerciseRepository : IExerciseRepository
 
     public async Task AddExerciseAsync(Exercise exercise)
     {
-        throw new NotImplementedException();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
+        
+            var sql = "INSERT INTO Exercise (TotalTime, Run, Walk, Bike, Hike, UserId, ExerciseDate) VALUES (@TotalTime, @Run, @Walk, @Bike, @Hike, @UserId, @ExerciseDate)";
+            connection.Execute(sql, exercise);
+        }
     }
 
-    public async Task<Exercise> FindAllByDateAsync(DateTime dateTime)
+    public async Task<List<Exercise>> FindAllByDateAsync(DateTime dateTime)
     {
-        throw new NotImplementedException();
+        await using var connection = new SqlConnection(_databaseOptions.ConnectionString);
+        
+        await connection.OpenAsync();
+
+        var query = await connection.QueryAsync<Exercise>("SELECT * FROM Exercise Where ExerciseDate = @ExerciseDate", new {ExerciseDate = dateTime});
+
+        return query.ToList();
     }
 
     public async Task<Exercise> FindByIdAsync(int ExerciseId)
