@@ -11,5 +11,23 @@ public sealed class DapperStepsRepository : IStepsRepository
         _databaseOptions = databaseOptions;
     }
 
-    // add methods
+    public async Task AddStepsAsync(Steps steps)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<Steps> FindAllByDateAsync(DateTime date)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<Steps> FindByIdAsync(int StepId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task DeleteStepsAsync(int StepId)
+    {
+        throw new NotImplementedException();
+    }
 }

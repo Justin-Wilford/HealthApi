@@ -31,3 +31,5 @@
 /Users/justinwilford/cf/healthApp/obj/Debug/net8.0/healthApp.pdb
 /Users/justinwilford/cf/healthApp/obj/Debug/net8.0/healthApp.genruntimeconfig.cache
 /Users/justinwilford/cf/healthApp/obj/Debug/net8.0/ref/healthApp.dll
+/Users/justinwilford/cf/healthApp/bin/Debug/net8.0/Dapper.dll
+/Users/justinwilford/cf/healthApp/obj/Debug/net8.0/healthApp.sourcelink.json
