@@ -11,5 +11,23 @@ public sealed class DapperUsersRepository : IUsersRepository
         _databaseOptions = databaseOptions;
     }
 
-    // add methods
+    public async Task AddUserAsync(Users users)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task UpdateUserAsync(Users user)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<Users>> FindAllUsersAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<Users?> FindUserByIdAsync(int UserId)
+    {
+        throw new NotImplementedException();
+    }
 }
