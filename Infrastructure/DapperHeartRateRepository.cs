@@ -11,5 +11,23 @@ public sealed class DapperHeartRateRepository : IHeartRateRepository
         _databaseOptions = databaseOptions;
     }
 
-    // add methods
+    public Task<HeartRate> GetHeartRateByIdAsync(int HeartRateId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<HeartRate> GetAverageHeartRateAsync(DateTime dateTime)
+    {
+        throw new NotSupportedException();
+    }
+
+    public Task AddHeartRateAsync(HeartRate heartRate)
+    {
+        throw new NotFiniteNumberException();
+    }
+
+    public Task DeleteHeartRateAsync(int HeartRateId)
+    {
+        throw new NotImplementedException();
+    }
 }
