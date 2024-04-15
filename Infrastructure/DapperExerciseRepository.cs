@@ -35,9 +35,16 @@ public sealed class DapperExerciseRepository : IExerciseRepository
         return query.ToList();
     }
 
-    public async Task<Exercise> FindByIdAsync(int ExerciseId)
+    public async Task<Exercise> FindByIdAsync(int exerciseId)
     {
-        throw new NotImplementedException();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
+            
+            var query = await connection.QuerySingleAsync<Exercise>("SELECT * FROM Exercise WHERE ExerciseId = @ExerciseId", new {ExerciseId = exerciseId});
+
+            return query;
+        }  
     }
 
     public async Task DeleteExerciseAsync(int exerciseId)
