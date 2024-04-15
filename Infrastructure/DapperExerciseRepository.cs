@@ -49,6 +49,12 @@ public sealed class DapperExerciseRepository : IExerciseRepository
 
     public async Task DeleteExerciseAsync(int exerciseId)
     {
-        throw new NotImplementedException();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
+            
+            connection.Execute(
+                "DELETE FROM Exercise WHERE ExerciseId = @ExerciseId", new { ExerciseId = exerciseId });
+        }
     }
 }
