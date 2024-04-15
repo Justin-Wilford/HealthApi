@@ -25,8 +25,18 @@ public sealed class DapperGoalRepository : IGoalRepository
         }
     }
 
-    public async Task UpdateGoalsAsync(int UserId)
+    public async Task UpdateGoalsAsync(Goals goals)
     {
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
 
+            var sql = @"UPDATE Goals SET
+                            StepGoal = @StepGoal,
+                            WaterIntakeGoal = @WaterIntakeGoal
+                        WHERE UserId = @UserId";
+
+            await connection.ExecuteAsync(sql, goals);
+        }
     }
 }
