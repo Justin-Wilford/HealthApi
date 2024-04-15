@@ -1,4 +1,6 @@
+using Dapper;
 using HealthApi.Application;
+using Microsoft.Data.SqlClient;
 
 namespace HealthApi.Infrastructure;
 
@@ -11,9 +13,16 @@ public sealed class DapperHeartRateRepository : IHeartRateRepository
         _databaseOptions = databaseOptions;
     }
 
-    public async Task<HeartRate> GetHeartRateByIdAsync(int HeartRateId)
+    public async Task<HeartRate> GetHeartRateByIdAsync(int heartRateId)
     {
-        throw new NotImplementedException();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
+            
+            var query = await connection.QuerySingleAsync<HeartRate>("SELECT * FROM HeartRate WHERE HeartRateId = @HeartRateId", new {HeartRateId = heartRateId});
+
+            return query;
+        } 
     }
 
     public async Task<HeartRate> GetAverageHeartRateAsync(DateTime dateTime)
