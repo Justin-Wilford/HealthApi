@@ -49,8 +49,14 @@ public sealed class DapperHeartRateRepository : IHeartRateRepository
         }
     }
 
-    public async Task DeleteHeartRateAsync(int HeartRateId)
+    public async Task DeleteHeartRateAsync(int heartRateId)
     {
-        throw new NotImplementedException();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
+            
+            connection.Execute(
+                "DELETE FROM HeartRate WHERE HeartRateId = @HeartRateId", new { HeartRateId = heartRateId });
+        }    
     }
 }
