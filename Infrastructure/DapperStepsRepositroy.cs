@@ -21,7 +21,8 @@ public sealed class DapperStepsRepository : IStepsRepository
         
             var sql = "INSERT INTO Steps (StepsTaken, Miles, UserId, StepDate) VALUES (@StepsTaken, @Miles, @UserId, @StepDate)";
             connection.Execute(sql, steps);
-        }    }
+        }    
+    }
 
     public async Task<Steps> FindAllByDateAsync(DateTime date)
     {

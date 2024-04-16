@@ -1,4 +1,6 @@
+using Dapper;
 using HealthApi.Application;
+using Microsoft.Data.SqlClient;
 
 namespace HealthApi.Infrastructure;
 
@@ -13,7 +15,13 @@ public sealed class DapperUsersRepository : IUsersRepository
 
     public async Task AddUserAsync(Users users)
     {
-        throw new NotImplementedException();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
+        
+            var sql = "INSERT INTO Users (Username, Age, Birthday, UserHeight, UserWeight, StepLength) VALUES (@Username, @Age, @Birthday, @UserHeight, @UserWeight, @StepLength)";
+            connection.Execute(sql, users);
+        }
     }
 
     public async Task UpdateUserAsync(Users user)
