@@ -40,8 +40,14 @@ public sealed class DapperStepsRepository : IStepsRepository
         }
     }
 
-    public async Task DeleteStepsAsync(int StepId)
+    public async Task DeleteStepsAsync(int stepId)
     {
-        throw new NotImplementedException();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
+            
+            connection.Execute(
+                "DELETE FROM Steps WHERE StepId = @StepId", new { StepId = stepId });
+        }
     }
 }
