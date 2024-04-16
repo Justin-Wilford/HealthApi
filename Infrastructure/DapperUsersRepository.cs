@@ -44,7 +44,13 @@ public sealed class DapperUsersRepository : IUsersRepository
 
     public async Task<List<Users>> FindAllUsersAsync()
     {
-        throw new NotImplementedException();
+        await using var connection = new SqlConnection(_databaseOptions.ConnectionString);
+        
+        await connection.OpenAsync();
+
+        var query = await connection.QueryAsync<Users>("SELECT * FROM Users");
+
+        return query.ToList();
     }
 
     public async Task<Users?> FindUserByIdAsync(int UserId)
