@@ -43,6 +43,12 @@ public sealed class DapperWaterIntakeRepository : IWaterIntakeRepository
 
     public async Task DeleteWaterAsync(int waterIntakeId)
     {
-        throw new NotImplementedException();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
+            
+            connection.Execute(
+                "DELETE FROM WaterIntake WHERE WaterIntakeId = @WaterIntakeId", new { WaterIntakeId = waterIntakeId });
+        }
     }
 }
