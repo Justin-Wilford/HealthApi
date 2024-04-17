@@ -5,7 +5,7 @@ namespace HealthApi.Application.Queries;
 public sealed class FindAllWaterByDateQuery : HttpEndpoint
 {
     [HttpGet("WaterIntake")]
-    public async Task<WaterIntake?> ExecuteAsync(
+    public async Task<List<WaterIntake?>> ExecuteAsync(
         [FromServices] IWaterIntakeRepository waterIntakeRepository,
         [FromQuery] DateTime WaterIntakeDate,
         [FromQuery] int UserId)

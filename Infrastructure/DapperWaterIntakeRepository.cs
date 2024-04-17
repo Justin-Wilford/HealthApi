@@ -24,18 +24,17 @@ public sealed class DapperWaterIntakeRepository : IWaterIntakeRepository
         }
     }
 
-    public async Task<WaterIntake?> FindAllByDateAsync(DateTime waterIntakeDate, int userId)
+    public async Task<List<WaterIntake?>> FindAllByDateAsync(DateTime waterIntakeDate, int userId)
     {
-        throw new NotImplementedException();
-        // await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
-        // {
-        //     await connection.OpenAsync();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
             
-        //     var query = await connection.QuerySingleAsync<string>("SELECT FROM WaterIntake " + 
-        //         "where UserId = @UserId AND WaterIntakeDate = @WaterIntakeDate");
+            var query = await connection.QueryAsync<WaterIntake>("SELECT * FROM WaterIntake " + 
+                "where UserId = @UserId AND WaterIntakeDate = @WaterIntakeDate", new {WaterIntakeDate = waterIntakeDate, UserId = userId});
 
-        //     return await connection.ExecuteAsync(query, waterIntakeDate, userId);
-        // }
+            return query.ToList();
+        }
     }
 
     public async Task<WaterIntake?> FindByIdAsync(int waterIntakeId)
