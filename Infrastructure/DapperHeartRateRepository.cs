@@ -25,17 +25,17 @@ public sealed class DapperHeartRateRepository : IHeartRateRepository
         } 
     }
 
-    public async Task<HeartRate> GetAverageHeartRateAsync(DateTime dateTime) // int userId, 
+    public async Task<int> GetAverageHeartRateAsync(DateTime heartRateDate, int userId)
     {
-        throw new NotImplementedException();
-        // await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
-        // {
-        //     await connection.OpenAsync();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
             
-        //     var query = await connection.QuerySingleAsync<HeartRate>("SELECT AVG(AverageHeartRate) AverageHeartRate FROM HeartRate where UserId = @UserId AND HeartRateDate = @HeartRateDate");
+            var query = await connection.QuerySingleAsync<int>("SELECT AVG(AverageHeartRate) AverageHeartRate FROM HeartRate " + 
+                "where UserId = @UserId AND HeartRateDate = @HeartRateDate", new { HeartRateDate = heartRateDate, UserId = userId });
 
-        //     return await connection.ExecuteAsync(query, userId, dateTime);
-        // }
+            return query;
+        }
     }
 
     public async Task AddHeartRateAsync(HeartRate heartRate)
