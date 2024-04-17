@@ -24,13 +24,13 @@ public sealed class DapperExerciseRepository : IExerciseRepository
         }
     }
 
-    public async Task<List<Exercise>> FindAllByDateAsync(DateTime dateTime)
+    public async Task<List<Exercise>> FindAllByDateAsync(DateTime dateTime, int userId)
     {
         await using var connection = new SqlConnection(_databaseOptions.ConnectionString);
         
         await connection.OpenAsync();
 
-        var query = await connection.QueryAsync<Exercise>("SELECT * FROM Exercise Where ExerciseDate = @ExerciseDate", new {ExerciseDate = dateTime});
+        var query = await connection.QueryAsync<Exercise>("SELECT * FROM Exercise Where ExerciseDate = @ExerciseDate AND UserId = @UserId", new {ExerciseDate = dateTime, UserId = userId});
 
         return query.ToList();
     }
