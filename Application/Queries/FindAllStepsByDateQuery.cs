@@ -5,7 +5,7 @@ namespace HealthApi.Application.Queries;
 public sealed class FindStepsByDateQuery : HttpEndpoint
 {
     [HttpGet("Steps")]
-    public async Task<Steps?> ExecuteAsync(
+    public async Task<List<Steps?>> ExecuteAsync(
         [FromServices] IStepsRepository stepsRepository,
         [FromQuery] DateTime StepDate,
         [FromQuery] int UserId)

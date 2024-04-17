@@ -24,18 +24,17 @@ public sealed class DapperStepsRepository : IStepsRepository
         }    
     }
 
-    public async Task<Steps> FindAllByDateAsync(DateTime stepDate, int UserId)
+    public async Task<List<Steps>> FindAllByDateAsync(DateTime stepDate, int userId)
     {
-        throw new NotImplementedException();
-        // await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
-        // {
-        //     await connection.OpenAsync();
+        await using (var connection = new SqlConnection(_databaseOptions.ConnectionString))
+        {
+            await connection.OpenAsync();
             
-        //     var query = await connection.QuerySingleAsync<string>("SELECT FROM Steps " + 
-        //         "where UserId = @UserId AND StepDate = @StepDate");
+            var query = await connection.QueryAsync<Steps>("SELECT * FROM Steps " + 
+                "WHERE UserId = @UserId AND StepDate = @StepDate", new {StepDate = stepDate, UserId = userId});
 
-        //     return await connection.ExecuteAsync(query, stepDate, UserId);
-        // }
+            return query.ToList();
+        }
     }
 
     public async Task<Steps> FindByIdAsync(int stepId)
